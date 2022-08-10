@@ -1,0 +1,135 @@
+
+.navbar{
+   width: 100%;
+   /* border: 1px solid blue; */
+   background-color: var(--black50);
+   color: var(--white10);
+}
+.inner_nav{
+  padding-inline: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  /* border: 1px solid red; */
+}
+.logo{
+    width: 15rem;
+    /* border: 2px solid blue; */
+    position: relative;
+    /* height: 10rem; */
+    height: 7rem;
+}
+.right{
+    font-size: 2rem;
+   /* border: 1px solid rebeccapurple; */
+   /* display: flex;
+   flex-direction: column;
+   justify-content: right; */
+   position: relative;
+   flex: 1;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+.right p{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  
+}
+.logout{
+    position: absolute;
+    padding: .5rem 1rem;
+    border-radius: none !important;
+    cursor: pointer;
+    margin-top: 1rem;
+    right: 0;
+    top: 3rem;
+}
+.left{
+    display: flex;
+    align-items: center;
+    gap:3rem;
+}
+.navlinks > *{
+      font-size: 2rem;
+      margin: 0 1rem;
+}
+.menu{
+    display: none;
+}
+.close{
+    display: none;
+}
+
+@media screen and (max-width : 56.25rem ){
+    .navlinks > *{
+       color: red;
+  }
+ }
+ @media screen and (max-width : 37.5rem ){
+    .navlinks > *{
+       color: green;
+       color: var(--white10);
+  }
+  .close{
+    display: block;
+  }
+  .inner_nav{
+    justify-content: space-between;
+  }
+  .menu{
+    display: block;
+  }
+  .menu svg{
+      font-size: 4rem;
+      color: red;
+  }
+  .right {
+    display: block;
+    position: absolute;
+    background-color: var(--red10);
+    right:-100%;
+    top: 0%;
+    width: 40%;
+    height: 100vh;
+    padding: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    justify-content:flex-start;
+    gap: 4rem;
+    transition: right .3s ;
+  }
+ 
+  .close{
+    display: block;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    cursor: pointer;
+    font-size: 3rem;
+  }
+  .right p {
+    color: var(--white10);
+  }
+  .navlinks{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    color: var(--white10);
+  }
+  .logout{
+   top: 20rem;
+   right: 6rem;
+  }
+ }
+ @media screen and (max-width : 25rem ){
+    .navlinks > *{
+       color: #aeaee11d;
+  }
+ }
+
+ .showNav {
+    right: 0;
+  }

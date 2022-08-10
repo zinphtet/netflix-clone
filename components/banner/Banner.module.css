@@ -1,0 +1,25 @@
+.banner{
+    padding: 12rem 2rem;
+    color: var(--white10);
+}
+.banner > *{
+    margin-bottom: 2rem;
+}
+.netflix{
+    font-size: 4rem;
+    /* font-family: 'Alumni Sans Inline One', cursive; */
+}
+.movie_title{
+    font-size: 2.5rem;
+}
+.info{
+    font-size: 2.5rem;
+}
+.play_btn{
+    padding: .7rem 1.5rem;
+    border-radius: .5rem;
+    border: none;
+    /* border: 1px solid red; */
+    background-color: var(--white10);
+    font-size: 1.75rem;
+}
