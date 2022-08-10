@@ -4,9 +4,10 @@
     padding-bottom:8rem;
     position: relative;
     z-index: 5;
-    background-image: url(./clifford.webp);
+    /* background-image: url(./clifford.webp); */
     background-size:cover;
     background-repeat: no-repeat;
+    background-position: center;
 }
 .back{
     position: absolute;
