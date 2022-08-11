@@ -9,7 +9,7 @@ const Header = () => {
   const backStyle = {
     backgroundImage : `url(${clifford.src})`
   }
-  console.log("My Image" , clifford)
+  // console.log("My Image" , clifford)
   return (
     <div className={style.header} style={backStyle}>
               <Navbar/>

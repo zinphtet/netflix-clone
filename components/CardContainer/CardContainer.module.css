@@ -18,6 +18,8 @@
     margin-right: .75rem;
 }
 .title{
-    font-size: 3rem;
+    font-size: 2.75rem;
     padding-block: 0rem 1rem;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: .5rem;
 }

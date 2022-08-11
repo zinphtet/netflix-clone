@@ -3,7 +3,6 @@ import style from './Navbar.module.css'
 import Image from 'next/image'
 import logo from '../../public/netflix.svg'
 import { RiArrowDropDownLine , RiMenu4Line,RiCloseCircleLine } from "react-icons/ri";
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 const Navbar = () => {
     const [showLogout , setShowLogout] = useState(false)
@@ -14,7 +13,6 @@ const Navbar = () => {
    useEffect(()=>{
       if(!menu) return ;
       window.addEventListener('scroll',()=>{
-         // alert("HELLO")
          setMenu(false)
       })
    },[])

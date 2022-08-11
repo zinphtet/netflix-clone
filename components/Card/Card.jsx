@@ -3,7 +3,8 @@ import style from './Card.module.css'
 import myImg from './raya.jpg'
 import Image from 'next/image'
 import {motion}  from 'framer-motion'
-const Card = ({card_type , id}) => {
+import defaultImg from './default.webp'
+const Card = ({card_type , id,imgUrl}) => {
     const cardStyle = {
         large : style.card_1,
         medium : style.card_2,
@@ -16,8 +17,8 @@ const Card = ({card_type , id}) => {
   scale:1.08 , zIndex:100
  }
   return (
-    <motion.div className={cardStyle[card_type]} whileHover={id==0 ? animate1 : animate2}>
-        <Image src={myImg.src} layout='fill' objectFit='cover'/>
+    <motion.div className={`${style.card} ${cardStyle[card_type]}`} whileHover={id==0 ? animate1 : animate2}>
+        <Image src={imgUrl || defaultImg.src} layout='fill' objectFit='cover'/>
     </motion.div>
   )
 }
