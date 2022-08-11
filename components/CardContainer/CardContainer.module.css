@@ -1,0 +1,23 @@
+.card_container{
+    padding-inline: 2rem;
+    color: var(--white10);
+    margin-block: 4rem 2rem;
+    /* border: 1px solid blue; */
+    /* display: flex;
+    gap: 1rem; */
+}
+.card_wrapper {
+   padding-block: 1.5rem;
+    width: 100%;
+    display: flex;
+   cursor: grab;
+   overflow: auto;
+   /* border: 1px solid blue; */
+}
+.card_wrapper > *{
+    margin-right: .75rem;
+}
+.title{
+    font-size: 3rem;
+    padding-block: 0rem 1rem;
+}

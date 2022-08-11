@@ -9,6 +9,7 @@ html
 }
 body{
   overflow-x: hidden;
+  background-color: var(--black10);
 }
 a {
   color: inherit;
@@ -77,3 +78,7 @@ svg,button{
   cursor: pointer;
 }
 
+::-webkit-scrollbar{
+  width: 0rem;
+  color: red;
+}

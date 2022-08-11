@@ -1,4 +1,4 @@
-import React ,{useState} from 'react'
+import React ,{useState , useEffect} from 'react'
 import style from './Navbar.module.css'
 import Image from 'next/image'
 import logo from '../../public/netflix.svg'
@@ -11,7 +11,13 @@ const Navbar = () => {
     const logBtn = ()=>{
         setShowLogout(!showLogout)
     }
-   
+   useEffect(()=>{
+      if(!menu) return ;
+      window.addEventListener('scroll',()=>{
+         // alert("HELLO")
+         setMenu(false)
+      })
+   },[])
   return (
     <div className={` ${style.navbar}`}>
        <div className={`container ${style.inner_nav}`}>
