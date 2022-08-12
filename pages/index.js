@@ -4,7 +4,7 @@ import Header from '../components/Header/Header';
 import CardContainer from '../components/CardContainer/CardContainer';
 import { useEffect } from 'react';
 import { getVideos } from '../youtube/youtube';
-import style from '../styles/Home.module.css'
+import style from '../styles/Home.module.css';
 export async function getServerSideProps(context) {
 	const disneyVideos = await getVideos('disney movies');
 	const travelVideos = await getVideos('travel videos');
@@ -39,7 +39,7 @@ export default function Home({
 			const res = await getVideos('real madrid highlights');
 			console.log('CALLED FROM INDEX --- ', res);
 		};
-		get();
+		// get();
 	}, []);
 
 	// console.log('DISNEY', typeof disneyVideos);
