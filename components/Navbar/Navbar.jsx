@@ -73,7 +73,7 @@ const Navbar = () => {
                     <RiCloseCircleLine/>
                  </div>
               </div>
-               <p onClick={logBtn}>{email} <RiArrowDropDownLine/> </p>
+               <p onClick={logBtn} title='click to show signout btn'>{email} <RiArrowDropDownLine/> </p>
                {
                 showLogout &&(
                     <button className={style.logout} onClick={handleSignOut}>Sign Out</button>

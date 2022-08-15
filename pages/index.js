@@ -3,17 +3,17 @@ import Image from 'next/image';
 import Header from '../components/Header/Header';
 import CardContainer from '../components/CardContainer/CardContainer';
 import { useEffect } from 'react';
-import { getVideos } from '../youtube/youtube';
+import { getVideos, getVideoInfo } from '../youtube/youtube';
 import style from '../styles/Home.module.css';
 export async function getServerSideProps(context) {
-	const disneyVideos = await getVideos('disney movies');
+	const actionVideos = await getVideos('action movies');
 	const travelVideos = await getVideos('travel videos');
 	const productivityVideos = await getVideos('productivity videos');
 	const popularVideos = await getVideos('popular videos in Myanmar');
-	console.log('DISNEY VIDEOS ---', disneyVideos);
+	console.log('action VIDEOS ---', actionVideos);
 	return {
 		props: {
-			disneyVideos: disneyVideos || [],
+			actionVideos: actionVideos || [],
 			travelVideos: travelVideos || [],
 			productivityVideos: productivityVideos || [],
 			popularVideos: popularVideos || [],
@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
 	};
 }
 export default function Home({
-	disneyVideos,
+	actionVideos,
 	travelVideos,
 	productivityVideos,
 	popularVideos,
@@ -29,20 +29,22 @@ export default function Home({
 	useEffect(() => {
 		// const get = async () => {
 		// 	const res = await fetch(
-		// 		`https:youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=disney movies&key=AIzaSyDn59b8t5I0KQcO1tdt-vXg_4epdG-qB4g`
+		// 		`https:youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=action movies&key=AIzaSyDn59b8t5I0KQcO1tdt-vXg_4epdG-qB4g`
 		// 	);
 		// 	const data = await res.json();
 		// 	console.log('Youtube Data ', data.items);
 		// };
 		// get();
 		const get = async () => {
-			const res = await getVideos('real madrid highlights');
-			console.log('CALLED FROM INDEX --- ', res);
+			// const res = await getVideos('real madrid highlights');
+			// console.log('CALLED FROM INDEX --- ', res);
+			const res = await getVideoInfo('bLvqoHBptjg');
+			console.log('RES FROM INDEXJS', res);
 		};
-		// get();
+		get();
 	}, []);
 
-	// console.log('DISNEY', typeof disneyVideos);
+	// console.log('action', typeof actionVideos);
 	// console.log('TRAVEL', typeof travelVideos);
 	// console.log('PRODUCTIVITY', productivityVideos);
 	return (
@@ -54,7 +56,7 @@ export default function Home({
 			</Head>
 
 			<Header />
-			<CardContainer title="Disney" cardSize="large" data={disneyVideos} />
+			<CardContainer title="action" cardSize="large" data={actionVideos} />
 			<CardContainer title="Travel" cardSize="medium" data={travelVideos} />
 			<CardContainer
 				title="Productivity"

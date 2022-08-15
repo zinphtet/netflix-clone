@@ -4,7 +4,8 @@ import myImg from './raya.jpg'
 import Image from 'next/image'
 import {motion}  from 'framer-motion'
 import defaultImg from './default.webp'
-const Card = ({card_type , id,imgUrl}) => {
+import Link from 'next/link'
+const Card = ({card_type , id,imgUrl , videoId}) => {
     const cardStyle = {
         large : style.card_1,
         medium : style.card_2,
@@ -17,9 +18,13 @@ const Card = ({card_type , id,imgUrl}) => {
   scale:1.08 , zIndex:100
  }
   return (
-    <motion.div className={`${style.card} ${cardStyle[card_type]}`} whileHover={id==0 ? animate1 : animate2}>
-        <Image src={imgUrl || defaultImg.src} layout='fill' objectFit='cover'/>
-    </motion.div>
+    <Link href={`/video/${videoId}`}>
+      <a>
+        <motion.div className={`${style.card} ${cardStyle[card_type]}`} whileHover={id==0 ? animate1 : animate2}>
+            <Image src={imgUrl || defaultImg.src} layout='fill' objectFit='cover'/>
+        </motion.div>
+      </a>
+    </Link>
   )
 }
 
