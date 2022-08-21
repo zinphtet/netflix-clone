@@ -5,6 +5,7 @@ import CardContainer from '../components/CardContainer/CardContainer';
 import { useEffect } from 'react';
 import { getVideos, getVideoInfo } from '../youtube/youtube';
 import style from '../styles/Home.module.css';
+import { startFetchMyQuery } from '../Hasura/hasura';
 export async function getServerSideProps(context) {
 	const actionVideos = await getVideos('action movies');
 	const travelVideos = await getVideos('travel videos');
@@ -41,7 +42,8 @@ export default function Home({
 			const res = await getVideoInfo('bLvqoHBptjg');
 			console.log('RES FROM INDEXJS', res);
 		};
-		get();
+		// get();
+		startFetchMyQuery();
 	}, []);
 
 	// console.log('action', typeof actionVideos);

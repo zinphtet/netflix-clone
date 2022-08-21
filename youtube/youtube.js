@@ -24,14 +24,14 @@ export const getVideos = async (query) => {
 	}
 };
 export const getVideoInfo = async (id) => {
-	console.log('getVideoInfo VideoId', id);
+	// console.log('getVideoInfo VideoId', id);
 	try {
 		const res = await fetch(
 			`https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${id}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
 		);
 		const data = await res.json();
 		const myData = data.items[0];
-		console.log('Video Information', data);
+		// console.log('Video Information', data);
 		return {
 			description: myData.snippet.description,
 			publishedAt: myData.snippet.publishedAt,
