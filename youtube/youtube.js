@@ -10,7 +10,7 @@ export const getVideos = async (query) => {
 			`https:youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${query}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
 		);
 		const data = await res.json();
-		console.log('Youtube Data ', data.items);
+		// console.log('Youtube Data ', data.items);
 		// if(!data) return []
 		return data.items?.map((data) => {
 			return {

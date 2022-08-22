@@ -5,13 +5,13 @@ import CardContainer from '../components/CardContainer/CardContainer';
 import { useEffect } from 'react';
 import { getVideos, getVideoInfo } from '../youtube/youtube';
 import style from '../styles/Home.module.css';
-import { startFetchMyQuery } from '../Hasura/hasura';
+import { fetchUserHasura } from '../Hasura/hasura';
 export async function getServerSideProps(context) {
 	const actionVideos = await getVideos('action movies');
 	const travelVideos = await getVideos('travel videos');
 	const productivityVideos = await getVideos('productivity videos');
 	const popularVideos = await getVideos('popular videos in Myanmar');
-	console.log('action VIDEOS ---', actionVideos);
+	// console.log('action VIDEOS ---', actionVideos);
 	return {
 		props: {
 			actionVideos: actionVideos || [],
@@ -43,7 +43,7 @@ export default function Home({
 			console.log('RES FROM INDEXJS', res);
 		};
 		// get();
-		startFetchMyQuery();
+		// fetchUserHasura();
 	}, []);
 
 	// console.log('action', typeof actionVideos);

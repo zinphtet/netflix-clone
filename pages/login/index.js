@@ -20,7 +20,7 @@ const Login = () => {
 			const token = await m.auth.loginWithMagicLink({
 				email,
 			});
-			console.log(token);
+			console.log('DID TOKEN FROM LOGIN', token);
 			if (token) {
 				router.push('/');
 				// setLoading(false);
