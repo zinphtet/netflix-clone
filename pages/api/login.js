@@ -1,6 +1,7 @@
 import { magicAdmin } from '../../magic/magic_server';
 import jwt from 'jsonwebtoken';
 import { createNewUser, fetchUserHasura } from '../../Hasura/hasura';
+import { setTokenCookie } from '../../cookie/cookie';
 export default async function login(req, res) {
 	if (req.method === 'POST') {
 		try {
@@ -25,14 +26,21 @@ export default async function login(req, res) {
 			console.log({ jwtToken });
 			const user = await fetchUserHasura(jwtToken);
 			console.log({ userFromHasura: user });
-			if (user.users.length === 0) {
-				//create user
-				console.log('User is not registered');
-				const res = await createNewUser(jwtToken, metadata);
-				console.log('Registered On the Fly ', res);
-			} else {
-				console.log('User Already Existed ', user);
-			}
+			user.users.length === 0 && (await createNewUser(jwtToken, metadata));
+			const cookie = setTokenCookie(jwtToken, res);
+			console.log({ cookie });
+			// if (user.users.length === 0) {
+			// 	//create user
+			// 	console.log('User is not registered');
+			// 	const resUser = await createNewUser(jwtToken, metadata);
+			// 	const cookie = setTokenCookie(jwtToken, res);
+			// 	console.log({ cookie });
+			// 	console.log('Registered On the Fly ', resUser);
+			// } else {
+			// 	const cookie = setTokenCookie(jwtToken, res);
+			// 	console.log({ cookie });
+			// 	console.log('User Already Existed ', user);
+			// }
 			res.send({ done: true, metadata, didToken, jwtToken, user });
 		} catch (err) {
 			res.status(500).send({ done: false });

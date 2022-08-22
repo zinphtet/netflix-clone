@@ -17,12 +17,26 @@ const Login = () => {
 			setLoading(true);
 			console.log('Starting magic');
 			// const token = await m.auth.loginWithEmailOTP({ email });
-			const token = await m.auth.loginWithMagicLink({
+			const didToken = await m.auth.loginWithMagicLink({
 				email,
 			});
-			console.log('DID TOKEN FROM LOGIN', token);
-			if (token) {
-				router.push('/');
+			console.log('DID TOKEN FROM LOGIN', didToken);
+			if (didToken) {
+				const res = await fetch('/api/login', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${didToken} `,
+					},
+				});
+				const data = await res.json();
+				if (data.done) {
+					console.log('res data', data);
+					router.push('/');
+				} else {
+					// setLoading(false);
+					console.error('Error sending request to Login Api');
+				}
 				// setLoading(false);
 			}
 		} catch (err) {
