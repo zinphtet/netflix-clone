@@ -16,7 +16,6 @@ const Login = () => {
 		try {
 			setLoading(true);
 			console.log('Starting magic');
-			// const token = await m.auth.loginWithEmailOTP({ email });
 			const didToken = await m.auth.loginWithMagicLink({
 				email,
 			});
@@ -34,10 +33,10 @@ const Login = () => {
 					console.log('res data', data);
 					router.push('/');
 				} else {
-					// setLoading(false);
+				
 					console.error('Error sending request to Login Api');
 				}
-				// setLoading(false);
+
 			}
 		} catch (err) {
 			setLoading(false);

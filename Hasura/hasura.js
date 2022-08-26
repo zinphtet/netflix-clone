@@ -22,7 +22,8 @@ async function fetchGraphQL(operationsDoc, operationName, variables, token) {
 	return await result.json();
 }
 
-const operationsDoc = `
+export async function fetchUserHasura(token) {
+	const operationsDoc = `
     query MyQuery {
       users {
         issuer
@@ -33,8 +34,6 @@ const operationsDoc = `
     }
     
   `;
-
-export async function fetchUserHasura(token) {
 	const { errors, data } = await fetchGraphQL(
 		operationsDoc,
 		'MyQuery',
@@ -88,3 +87,199 @@ export async function createNewUser(token, metadata) {
 }
 
 // startExecuteMyMutation();
+
+export async function fetchVideoStats(token, postData) {
+	const { issuer, videoId } = postData;
+	// console.log({ postData });
+	const operationsDoc = `
+	query MyQuery( $issuer:String! , $videoId : String!) {
+	  stats(where: {userId: {_eq: $issuer}, videoId: {_eq: $videoId}}) {
+		watched
+		videoId
+		userId
+		id
+		favourited
+	  }
+	}
+  `;
+
+	const { errors, data } = await fetchGraphQL(
+		operationsDoc,
+		'MyQuery',
+		{
+			issuer,
+			videoId,
+		},
+		token
+	);
+
+	if (errors) {
+		// handle those errors like a pro
+		console.error(errors);
+	}
+
+	// do something great with this precious data
+	return data;
+}
+
+//Create Stats
+
+export async function createStats(token, myData) {
+	const { favourited, userId, videoId, watched } = myData;
+	const operationsDoc = `
+	  mutation MyMutation($favourited:Int! , $userId : String!, $videoId : String!,$watched: String!) {
+	    insert_stats(objects: {favourited:$favourited, userId: $userId, videoId: $videoId, watched:$watched}) {
+	      affected_rows
+	    }
+	  }
+	`;
+
+	const { errors, data } = await fetchGraphQL(
+		operationsDoc,
+		'MyMutation',
+		{
+			favourited,
+			userId,
+			videoId,
+			watched,
+		},
+		token
+	);
+
+	if (errors) {
+		// handle those errors like a pro
+		console.error(errors);
+	}
+
+	// do something great with this precious data
+	// console.log(data);
+	return data;
+}
+
+// startExecuteMyMutation();
+
+//Update Stats
+
+export async function updateStats(token, updateData) {
+	// console.log({ updateData });
+	const { issuer, videoId, favourited } = updateData;
+	const operationsDoc = `
+	  mutation MyMutation($issuer : String!, $videoId: String! , $favourited : Int!) {
+	    update_stats(where: {userId: {_eq: $issuer}, videoId: {_eq: $videoId}}, _set: {favourited: $favourited}) {
+	      returning {
+	        favourited
+	        userId
+	        videoId
+	        watched
+	      }
+	    }
+	  }
+	`;
+
+	const { errors, data } = await fetchGraphQL(
+		operationsDoc,
+		'MyMutation',
+		{
+			issuer,
+			videoId,
+			favourited,
+		},
+		token
+	);
+
+	if (errors) {
+		// handle those errors like a pro
+		console.error(errors);
+	}
+
+	// do something great with this precious data
+	return data;
+}
+
+///Fetch Favourited
+
+export async function fetchFavourited(token, info) {
+	const { issuer, videoId } = info;
+	const operationsDoc = `
+  query MyQuery($issuer : String!, $videoId : String!) {
+    stats(where: {userId: {_eq: $issuer}, videoId: {_eq: $videoId}}) {
+      favourited
+    }
+  }
+`;
+	const { errors, data } = await fetchGraphQL(
+		operationsDoc,
+		'MyQuery',
+		{
+			issuer,
+			videoId,
+		},
+		token
+	);
+
+	if (errors) {
+		// handle those errors like a pro
+		console.error(errors);
+	}
+
+	// do something great with this precious data
+	return data?.stats[0]?.favourited;
+}
+
+//Fetch Watch Again
+
+export async function fetchWatchAgain(token, issuer) {
+	const operationsDoc = `
+  query MyQuery ($issuer : String!) {
+    stats(where: {favourited: {_neq: 2}, userId: {_eq: $issuer}}) {
+      videoId
+      favourited
+	  watched
+    }
+  }
+`;
+	const { errors, data } = await fetchGraphQL(
+		operationsDoc,
+		'MyQuery',
+		{
+			issuer,
+		},
+		token
+	);
+
+	if (errors) {
+		// handle those errors like a pro
+		console.error(errors);
+	}
+
+	// do something great with this precious data
+	return data?.stats;
+}
+
+export async function fetchMyList(token, issuer) {
+	const operationsDoc = `
+  query MyQuery ($issuer:String!) {
+    stats(where: {favourited: {_eq: 1}, userId: {_eq: $issuer}}) {
+      videoId
+      favourited
+	  watched
+    }
+  }
+`;
+	const { errors, data } = await fetchGraphQL(
+		operationsDoc,
+		'MyQuery',
+		{
+			issuer,
+		},
+		token
+	);
+
+	if (errors) {
+		// handle those errors like a pro
+		console.error(errors);
+	}
+
+	// do something great with this precious data
+	return data?.stats;
+}

@@ -18,6 +18,7 @@
     position: relative;
     /* height: 10rem; */
     height: 7rem;
+    cursor: pointer;
 }
 .right{
     font-size: 2rem;

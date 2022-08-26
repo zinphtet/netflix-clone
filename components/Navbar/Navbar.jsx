@@ -22,7 +22,7 @@ const Navbar = () => {
        try {
          await m.user.logout();
          console.log(await m.user.isLoggedIn()); // => `false`
-         console.log("LOGGED OUT SUCCESSFUL")
+         // console.log("LOGGED OUT SUCCESSFUL")
          router.push('/login')
 
        } catch {
@@ -53,7 +53,7 @@ const Navbar = () => {
     <div className={` ${style.navbar}`}>
        <div className={`container ${style.inner_nav}`}>
           <div className={style.left}>
-            <div className={style.logo}>
+            <div className={style.logo} onClick={()=>router.push('/')}>
                <Image src={logo} layout='fill' objectFit='contain'/>
             </div>
             

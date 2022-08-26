@@ -14,7 +14,10 @@ export const getVideos = async (query) => {
 		// if(!data) return []
 		return data.items?.map((data) => {
 			return {
-				imgUrl: data.snippet.thumbnails.high.url,
+				// imgUrl: data.snippet.thumbnails.high.url,
+				imgUrl:
+					` https://img.youtube.com/vi/${data.id.videoId}/maxresdefault.jpg` ||
+					data.snippet.thumbnails.high.url,
 				title: data.snippet.title,
 				videoId: data.id.videoId,
 			};

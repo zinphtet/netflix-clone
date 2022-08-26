@@ -6,27 +6,22 @@ import { useRouter } from 'next/router';
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
 
-	const [isLoading, setLoading] = useState(false);
+	const [isLoading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const userStatus = async () => {
 			try {
 				const isLoggedIn = await m.user.isLoggedIn();
-				// setAuthReady(true);
-				// setUser(isLoggedIn);
-				// setLoading(true);
-				// if (isLoggedIn) {
-				// 	router.push('/');
-				// 	// setLoading(false);
-				// }
-				// if (!isLoggedIn) {
-				// 	router.push('/login');
-				// 	// setLoading(false);
-				// }
-				// setLoading(false);
+				setLoading(true);
+				if (isLoggedIn) {
+					router.push('/');
+				}
+				if (!isLoggedIn) {
+					router.push('/login');
+				}
+
 				console.log(isLoggedIn); // => `true` or `false`
 			} catch (err) {
-				// setAuthReady(true);
 				console.error('AUTH ERROR from _app.js', err.message);
 			}
 		};
@@ -38,8 +33,6 @@ function MyApp({ Component, pageProps }) {
 		const routeEnd = () => setLoading(false);
 		router.events.on('routeChangeStart', routeStart);
 		router.events.on('routeChangeComplete', routeEnd);
-		// router.events.off('Route Change Start', routeEnd);
-		// router.events.on('routeChangeError', routeEnd);
 		return () => {
 			router.events.off('routeChangeStart', routeStart);
 			router.events.off('routeChangeComplete', routeEnd);

@@ -5,8 +5,9 @@ import Head from 'next/head';
 import { getVideoInfo } from '../../youtube/youtube';
 import { useRouter } from 'next/router';
 import Loading from '../../components/Loading/Loading';
-import format from 'date-fns/format';
-
+import { AiFillDislike, AiFillLike } from 'react-icons/ai';
+import { verifyToken } from '../../cookie/verifyToken';
+import { updateStatsFromClient } from '../../Hasura/helper';
 // 4zH5iYM4wJo
 // bLvqoHBptjg
 // uO3HUjiWc8k
@@ -40,19 +41,95 @@ export async function getStaticPaths() {
 }
 
 const VideoPage = ({ video }) => {
+	if (!video) return <Loading />;
 	const router = useRouter();
 	const { videoId } = router.query;
-	// const [video, setVideo] = useState(null);
-	// useEffect(() => {
-	// 	console.log('VIDEO ID', videoId);
-	// 	const getInfo = async () => {
-	// 		const data = await getVideoInfo(videoId);
-	// 		setVideo(data);
-	// 		console.log('VIDEO INFO', data);
-	// 	};
-	// 	getInfo();
-	// }, []);
-	if (!video) return <Loading />;
+
+	const [like, setLike] = useState(false);
+	const [disLike, setDisLike] = useState(false);
+
+	const [token, setToken] = useState(null);
+	const [issuer, setIssuer] = useState(null);
+	const handleLike = () => {
+		if (!token || !issuer) return;
+		if (like) {
+			setLike(false);
+			console.log('Remove favoutite', {
+				videoId,
+				issuer,
+				token,
+				favourited: 3,
+			});
+			updateStatsFromClient({ videoId, issuer, token, favourited: 3 });
+		} else {
+			setDisLike(like);
+			setLike((prev) => !prev);
+			updateStatsFromClient({ videoId, issuer, token, favourited: 1 });
+		}
+	};
+	const handleDisLike = () => {
+		if (!token || !issuer) return;
+		if (disLike) {
+			setDisLike(false);
+			console.log('Remove favoutite', {
+				videoId,
+				issuer,
+				token,
+				favourited: 3,
+			});
+			updateStatsFromClient({ videoId, issuer, token, favourited: 3 });
+		} else {
+			setLike(disLike);
+			setDisLike((prev) => !prev);
+			updateStatsFromClient({ videoId, issuer, token, favourited: 2 });
+		}
+	};
+
+	useEffect(() => {
+		const cookie = document.cookie;
+		const cookieValue = cookie.split('=')[1];
+		setToken(cookieValue);
+		const { issuer } = verifyToken(cookieValue);
+		setIssuer(issuer);
+		const data = {
+			videoId,
+			cookies: cookieValue,
+			title: video.title,
+		};
+		const fetchVideo = async () => {
+			// console.log('cookie from clinet side', document.cookie);
+			await fetch('/api/stats', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			});
+		};
+		fetchVideo();
+	}, []);
+
+	useEffect(() => {
+		const getFavourited = async () => {
+			// console.log('Get Token', token);
+			// console.log('Get Issuer', issuer);
+			const res = await fetch(
+				`/api/stats?token=${token}&issuer=${issuer}&videoId=${videoId}`
+			);
+			const data = await res.json();
+			console.log({
+				data,
+			});
+			if (data.favourited === 1) setLike(true);
+			if (data.favourited === 2) setDisLike(true);
+			if (data.favourited === 3) {
+				setLike(false);
+				setDisLike(false);
+			}
+		};
+		getFavourited();
+	}, [token]);
+
 	const { description, publishedAt, views, title, cast } = video;
 	return (
 		<>
@@ -69,6 +146,14 @@ const VideoPage = ({ video }) => {
 							src={`https://www.youtube.com/embed/${videoId}?autoplay=0&origin=http://example.com`}
 							frameBorder="0"
 						></iframe>
+						<div className={style.rate_btns}>
+							<div style={style.btn_wrapper} onClick={handleLike}>
+								<AiFillLike color={`${like ? 'blue' : 'white'}`} />
+							</div>
+							<div style={style.btn_wrapper} onClick={handleDisLike}>
+								<AiFillDislike color={`${disLike ? 'blue' : 'white'}`} />
+							</div>
+						</div>
 					</div>
 					<div className={style.video_info}>
 						<p className={style.date}>Date : {publishedAt}</p>

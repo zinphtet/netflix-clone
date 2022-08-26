@@ -6,49 +6,44 @@ import { useEffect } from 'react';
 import { getVideos, getVideoInfo } from '../youtube/youtube';
 import style from '../styles/Home.module.css';
 import { fetchUserHasura } from '../Hasura/hasura';
+import { fetchWatchAgain } from '../Hasura/hasura';
+import { verifyToken } from '../cookie/verifyToken';
 export async function getServerSideProps(context) {
-	const actionVideos = await getVideos('action movies');
+	const token = context.req.cookies.jwtToken;
+	const comedyVideos = await getVideos('comedy movies');
 	const travelVideos = await getVideos('travel videos');
 	const productivityVideos = await getVideos('productivity videos');
 	const popularVideos = await getVideos('popular videos in Myanmar');
-	// console.log('action VIDEOS ---', actionVideos);
+	const { issuer } = verifyToken(token);
+	let watchAgainVideos = await fetchWatchAgain(token, issuer);
+
+	watchAgainVideos = watchAgainVideos.map(
+		({ videoId, favourited, watched }) => {
+			return {
+				videoId,
+				favourited,
+				title: watched,
+				imgUrl: ` https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+			};
+		}
+	);
 	return {
 		props: {
-			actionVideos: actionVideos || [],
+			comedyVideos: comedyVideos || [],
 			travelVideos: travelVideos || [],
 			productivityVideos: productivityVideos || [],
 			popularVideos: popularVideos || [],
+			watchAgainVideos: watchAgainVideos || [],
 		}, // will be passed to the page component as props
 	};
 }
 export default function Home({
-	actionVideos,
+	comedyVideos,
 	travelVideos,
 	productivityVideos,
 	popularVideos,
+	watchAgainVideos,
 }) {
-	useEffect(() => {
-		// const get = async () => {
-		// 	const res = await fetch(
-		// 		`https:youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=action movies&key=AIzaSyDn59b8t5I0KQcO1tdt-vXg_4epdG-qB4g`
-		// 	);
-		// 	const data = await res.json();
-		// 	console.log('Youtube Data ', data.items);
-		// };
-		// get();
-		const get = async () => {
-			// const res = await getVideos('real madrid highlights');
-			// console.log('CALLED FROM INDEX --- ', res);
-			const res = await getVideoInfo('bLvqoHBptjg');
-			console.log('RES FROM INDEXJS', res);
-		};
-		// get();
-		// fetchUserHasura();
-	}, []);
-
-	// console.log('action', typeof actionVideos);
-	// console.log('TRAVEL', typeof travelVideos);
-	// console.log('PRODUCTIVITY', productivityVideos);
 	return (
 		<div className={style.home}>
 			<Head>
@@ -58,7 +53,12 @@ export default function Home({
 			</Head>
 
 			<Header />
-			<CardContainer title="action" cardSize="large" data={actionVideos} />
+			<CardContainer title="Comedy" cardSize="large" data={comedyVideos} />
+			<CardContainer
+				title="Watch Again"
+				cardSize="small"
+				data={watchAgainVideos}
+			/>
 			<CardContainer title="Travel" cardSize="medium" data={travelVideos} />
 			<CardContainer
 				title="Productivity"
