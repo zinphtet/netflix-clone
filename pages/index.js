@@ -1,11 +1,10 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import Header from '../components/Header/Header';
 import CardContainer from '../components/CardContainer/CardContainer';
-import { useEffect } from 'react';
-import { getVideos, getVideoInfo } from '../youtube/youtube';
+
+import { getVideos } from '../youtube/youtube';
 import style from '../styles/Home.module.css';
-import { fetchUserHasura } from '../Hasura/hasura';
+
 import { fetchWatchAgain } from '../Hasura/hasura';
 import { verifyToken } from '../cookie/verifyToken';
 export async function getServerSideProps(context) {
@@ -14,6 +13,7 @@ export async function getServerSideProps(context) {
 	const travelVideos = await getVideos('travel videos');
 	const productivityVideos = await getVideos('productivity videos');
 	const popularVideos = await getVideos('popular videos in Myanmar');
+
 	const { issuer } = verifyToken(token);
 	let watchAgainVideos = await fetchWatchAgain(token, issuer);
 

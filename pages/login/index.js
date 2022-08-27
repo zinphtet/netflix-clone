@@ -15,11 +15,11 @@ const Login = () => {
 		e.preventDefault();
 		try {
 			setLoading(true);
-			console.log('Starting magic');
+	
 			const didToken = await m.auth.loginWithMagicLink({
 				email,
 			});
-			console.log('DID TOKEN FROM LOGIN', didToken);
+		
 			if (didToken) {
 				const res = await fetch('/api/login', {
 					method: 'POST',
@@ -30,13 +30,10 @@ const Login = () => {
 				});
 				const data = await res.json();
 				if (data.done) {
-					console.log('res data', data);
 					router.push('/');
 				} else {
-				
 					console.error('Error sending request to Login Api');
 				}
-
 			}
 		} catch (err) {
 			setLoading(false);

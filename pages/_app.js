@@ -13,11 +13,20 @@ function MyApp({ Component, pageProps }) {
 			try {
 				const isLoggedIn = await m.user.isLoggedIn();
 				setLoading(true);
-				if (isLoggedIn) {
-					router.push('/');
-				}
-				if (!isLoggedIn) {
+				const cookie = document.cookie;
+				const cookieValue = cookie.split('=')[1];
+				console.log({ isLoggedIn, cookieValue });
+
+				// if (isLoggedIn) {
+				// 	router.push('/');
+				// }
+				// if (!isLoggedIn) {
+				// 	router.push('/login');
+				// }
+				if (!cookieValue || !isLoggedIn) {
 					router.push('/login');
+				} else {
+					router.push('/');
 				}
 
 				console.log(isLoggedIn); // => `true` or `false`

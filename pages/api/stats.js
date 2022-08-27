@@ -3,13 +3,8 @@ import jwt from 'jsonwebtoken';
 import { createStats, fetchVideoStats } from '../../Hasura/hasura';
 import { updateStats, fetchFavourited } from '../../Hasura/hasura';
 export default async function Stats(req, res) {
-	// console.log('Cookie ', req.cookies.jwtToken);
-	// console.log('Req Body', req.body);
-	// const { videoId } = req.body;
+	
 	if (req.method === 'GET') {
-		// console.log('Get Request', req);
-		// console.log('get request ', req.query);
-
 		const { token, issuer, videoId } = req.query;
 		if (token) {
 			const data = await fetchFavourited(token, {
@@ -18,18 +13,12 @@ export default async function Stats(req, res) {
 			});
 			res.send({ msg: 'HELLO THIS IS SEND', favourited: data });
 		}
-		// console.log({ token, issuer, videoId });
-		// const data = await fetchFavourited(token, {
-		// 	issuer,
-		// 	videoId,
-		// });
 		res.send({ msg: 'HELLO THIS IS SEND' });
 	}
 
 	if (req.method === 'POST') {
 		try {
 			if (req.body.favourited) {
-				console.log('It Works UPDATE');
 				const { token, favourited, videoId, issuer } = req.body;
 
 				const updateReturn = await updateStats(token, {
@@ -37,7 +26,6 @@ export default async function Stats(req, res) {
 					favourited,
 					issuer,
 				});
-				console.log({ updateReturn });
 				return;
 			}
 			const jwtToken = req.body.cookies;

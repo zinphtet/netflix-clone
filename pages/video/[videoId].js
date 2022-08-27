@@ -54,12 +54,6 @@ const VideoPage = ({ video }) => {
 		if (!token || !issuer) return;
 		if (like) {
 			setLike(false);
-			console.log('Remove favoutite', {
-				videoId,
-				issuer,
-				token,
-				favourited: 3,
-			});
 			updateStatsFromClient({ videoId, issuer, token, favourited: 3 });
 		} else {
 			setDisLike(like);
@@ -71,12 +65,7 @@ const VideoPage = ({ video }) => {
 		if (!token || !issuer) return;
 		if (disLike) {
 			setDisLike(false);
-			console.log('Remove favoutite', {
-				videoId,
-				issuer,
-				token,
-				favourited: 3,
-			});
+
 			updateStatsFromClient({ videoId, issuer, token, favourited: 3 });
 		} else {
 			setLike(disLike);
@@ -111,15 +100,10 @@ const VideoPage = ({ video }) => {
 
 	useEffect(() => {
 		const getFavourited = async () => {
-			// console.log('Get Token', token);
-			// console.log('Get Issuer', issuer);
 			const res = await fetch(
 				`/api/stats?token=${token}&issuer=${issuer}&videoId=${videoId}`
 			);
 			const data = await res.json();
-			console.log({
-				data,
-			});
 			if (data.favourited === 1) setLike(true);
 			if (data.favourited === 2) setDisLike(true);
 			if (data.favourited === 3) {

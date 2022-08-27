@@ -1,5 +1,4 @@
 export const updateStatsFromClient = async (data) => {
-	// console.log('Update From Client working ...', data);
 	const returnData = await fetch('/api/stats', {
 		method: 'POST',
 		headers: {

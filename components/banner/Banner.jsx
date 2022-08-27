@@ -13,7 +13,7 @@ const Banner = () => {
     <div className={`${style.banner} container`}>
        <h3 className={style.netflix}>NETFLIX</h3>
        <p className={style.movie_title}>
-       Cliffod The big red dog (2011)
+       Cliffod The big red dog (2021)
        </p>
        <p className={style.info}>
         [ HD ] | Netflix

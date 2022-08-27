@@ -8,5 +8,6 @@ export const setTokenCookie = (token, res) => {
 		secure: process.env.NODE_ENV === 'production',
 		path: '/',
 	});
+	// console.log('Seted Cookie');
 	res.setHeader('Set-Cookie', setCookie);
 };

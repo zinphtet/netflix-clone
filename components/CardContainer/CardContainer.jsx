@@ -9,8 +9,7 @@ const CardContainer = ({title="Disney" , cardSize='large' , data}) => {
   if(!data) return <div>Loading ....</div>
  
   const myData = data
-  // console.log("DATA FROM CARD CONTAINER" , myData)
-  // console.log("")
+  
   return (
     <div className={`container ${style.card_container}`}>
         <h3 className={style.title}>{title}</h3>

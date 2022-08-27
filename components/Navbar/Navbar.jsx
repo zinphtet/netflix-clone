@@ -21,12 +21,14 @@ const Navbar = () => {
        e.preventDefault()
        try {
          await m.user.logout();
-         console.log(await m.user.isLoggedIn()); // => `false`
-         // console.log("LOGGED OUT SUCCESSFUL")
+         // console.log(await m.user.isLoggedIn()); // => `false`
+       
          router.push('/login')
+       
 
-       } catch {
+       } catch(err) {
          // Handle errors if required!
+         console.error("Error occur When Logout ",err.message)
        }
       
     }

@@ -151,17 +151,16 @@ export async function createStats(token, myData) {
 		console.error(errors);
 	}
 
-	// do something great with this precious data
-	// console.log(data);
+
 	return data;
 }
 
-// startExecuteMyMutation();
+
 
 //Update Stats
 
 export async function updateStats(token, updateData) {
-	// console.log({ updateData });
+
 	const { issuer, videoId, favourited } = updateData;
 	const operationsDoc = `
 	  mutation MyMutation($issuer : String!, $videoId: String! , $favourited : Int!) {
