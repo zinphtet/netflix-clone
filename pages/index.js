@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
 				videoId,
 				favourited,
 				title: watched,
-				imgUrl: ` https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+				imgUrl: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
 			};
 		}
 	);

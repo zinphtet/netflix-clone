@@ -5,7 +5,7 @@ import Image from 'next/image'
 import {motion}  from 'framer-motion'
 import defaultImg from './default.webp'
 import Link from 'next/link'
-const Card = ({card_type , id,imgUrl , videoId}) => {
+const Card = ({card_type,id,imgUrl,videoId}) => {
     const cardStyle = {
         large : style.card_1,
         medium : style.card_2,
@@ -24,7 +24,7 @@ const Card = ({card_type , id,imgUrl , videoId}) => {
     <Link href={`/video/${videoId}`}>
       <a>
         <motion.div className={`${style.card} ${cardStyle[card_type]}`} whileHover={id==0 ? animate1 : animate2}>
-            <Image src={imgUrl || defaultImg.src} layout='fill' objectFit='cover' alt='video img'/>
+            <Image src={imgUrl || defaultImg.src ||defaultImg} layout='fill' objectFit='cover' alt='video img'/>
         </motion.div>
       </a>
     </Link>
