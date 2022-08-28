@@ -95,7 +95,7 @@ const VideoPage = ({ video }) => {
 			});
 		};
 		fetchVideo();
-	}, [video.title]);
+	}, [video.title, videoId]);
 
 	useEffect(() => {
 		const getFavourited = async () => {

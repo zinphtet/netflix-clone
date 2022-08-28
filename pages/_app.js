@@ -29,13 +29,13 @@ function MyApp({ Component, pageProps }) {
 					router.push('/');
 				}
 
-				console.log(isLoggedIn); // => `true` or `false`
+				// console.log(isLoggedIn); // => `true` or `false`
 			} catch (err) {
 				console.error('AUTH ERROR from _app.js', err.message);
 			}
 		};
 		userStatus();
-	}, []);
+	}, [router]);
 
 	useEffect(() => {
 		const routeStart = () => setLoading(true);
