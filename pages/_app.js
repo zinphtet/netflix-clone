@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }) {
 			}
 		};
 		userStatus();
-	}, [router]);
+	}, []);
 
 	useEffect(() => {
 		const routeStart = () => setLoading(true);

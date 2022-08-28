@@ -18,7 +18,7 @@ export async function getStaticProps(context) {
 	// const video = null;
 	return {
 		props: {
-			video,
+			video: video || [],
 		},
 		// Next.js will attempt to re-generate the page:
 		// - When a request comes in
