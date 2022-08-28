@@ -11,6 +11,9 @@ const Card = ({card_type , id,imgUrl , videoId}) => {
         medium : style.card_2,
         small :  style.card_3
     }
+    console.log({
+      imgUrl
+    })
  const animate1 = {
   scaleY:1.05 , zIndex:100
  }

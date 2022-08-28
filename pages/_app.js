@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
 				setLoading(true);
 				const cookie = document.cookie;
 				const cookieValue = cookie.split('=')[1];
-				console.log({ isLoggedIn, cookieValue });
+				// console.log({ isLoggedIn, cookieValue });
 
 				// if (isLoggedIn) {
 				// 	router.push('/');

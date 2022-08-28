@@ -63,16 +63,16 @@
     display: none;
 }
 
-@media screen and (max-width : 56.25rem ){
+/* @media screen and (max-width : 56.25rem ){
     .navlinks > *{
        color: red;
   }
- }
+ } */
  @media screen and (max-width : 37.5rem ){
-    .navlinks > *{
+    /* .navlinks > *{
        color: green;
        color: var(--white10);
-  }
+  } */
   .close{
     display: block;
   }
