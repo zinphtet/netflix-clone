@@ -15,11 +15,11 @@ const Login = () => {
 		e.preventDefault();
 		try {
 			setLoading(true);
-	
+
 			const didToken = await m.auth.loginWithMagicLink({
 				email,
 			});
-		
+
 			if (didToken) {
 				const res = await fetch('/api/login', {
 					method: 'POST',
@@ -61,7 +61,12 @@ const Login = () => {
 			<div className={`${style.login} `}>
 				<div className={`${style.login_wrapper} container`}>
 					<div className={`${style.img_container}  `}>
-						<Image src="/netflix.svg" layout="fill" objectFit="contain" />
+						<Image
+							src="/netflix.svg"
+							layout="fill"
+							objectFit="contain"
+							alt="Netflix logo"
+						/>
 					</div>
 					<form className={style.form} onSubmit={handleLogin}>
 						<h5>Sign In</h5>

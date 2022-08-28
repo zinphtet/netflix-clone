@@ -56,7 +56,7 @@ const Navbar = () => {
        <div className={`container ${style.inner_nav}`}>
           <div className={style.left}>
             <div className={style.logo} onClick={()=>router.push('/')}>
-               <Image src={logo} layout='fill' objectFit='contain'/>
+               <Image src={logo} layout='fill' objectFit='contain' alt='netflix logo'/>
             </div>
             
           </div>

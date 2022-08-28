@@ -41,7 +41,6 @@ export async function getStaticPaths() {
 }
 
 const VideoPage = ({ video }) => {
-	if (!video) return <Loading />;
 	const router = useRouter();
 	const { videoId } = router.query;
 
@@ -96,7 +95,7 @@ const VideoPage = ({ video }) => {
 			});
 		};
 		fetchVideo();
-	}, []);
+	}, [video.title]);
 
 	useEffect(() => {
 		const getFavourited = async () => {
@@ -112,8 +111,8 @@ const VideoPage = ({ video }) => {
 			}
 		};
 		getFavourited();
-	}, [token]);
-
+	}, [token, issuer, videoId]);
+	if (!video) return <Loading />;
 	const { description, publishedAt, views, title, cast } = video;
 	return (
 		<>

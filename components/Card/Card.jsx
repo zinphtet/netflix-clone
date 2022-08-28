@@ -21,7 +21,7 @@ const Card = ({card_type , id,imgUrl , videoId}) => {
     <Link href={`/video/${videoId}`}>
       <a>
         <motion.div className={`${style.card} ${cardStyle[card_type]}`} whileHover={id==0 ? animate1 : animate2}>
-            <Image src={imgUrl || defaultImg.src} layout='fill' objectFit='cover'/>
+            <Image src={imgUrl || defaultImg.src} layout='fill' objectFit='cover' alt='video img'/>
         </motion.div>
       </a>
     </Link>
