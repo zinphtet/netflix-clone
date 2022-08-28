@@ -20,12 +20,19 @@ const Card = ({card_type,id,imgUrl,videoId}) => {
  const animate2 = {
   scale:1.08 , zIndex:100
  }
+ console.log({
+  imgUrl,
+  videoId
+ })
+ if(!imgUrl){
+  console.log("FOUND ",videoId)
+ }
  const notFoundImag = 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80'
   return (
     <Link href={`/video/${videoId}`}>
       <a>
         <motion.div className={`${style.card} ${cardStyle[card_type]}`} whileHover={id==0 ? animate1 : animate2}>
-            <Image src={imgUrl ||notFoundImag|| defaultImg.src ||defaultImg} layout='fill' objectFit='cover' alt='video img'/>
+            <Image src={imgUrl ||notFoundImag|| defaultImg.src} layout='fill' objectFit='cover' alt='video img'/>
         </motion.div>
       </a>
     </Link>
