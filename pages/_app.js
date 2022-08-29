@@ -1,4 +1,6 @@
 import '../styles/globals.css';
+import 'nprogress/nprogress.css';
+import NProgress from 'nprogress';
 import Loading from '../components/Loading/Loading';
 import { m } from '../magic/magic';
 import { useState, useEffect } from 'react';
@@ -6,30 +8,18 @@ import { useRouter } from 'next/router';
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
 
-	const [isLoading, setLoading] = useState(true);
-
 	useEffect(() => {
 		const userStatus = async () => {
 			try {
 				const isLoggedIn = await m.user.isLoggedIn();
-				setLoading(true);
 				const cookie = document.cookie;
 				const cookieValue = cookie.split('=')[1];
-				// console.log({ isLoggedIn, cookieValue });
 
-				// if (isLoggedIn) {
-				// 	router.push('/');
-				// }
-				// if (!isLoggedIn) {
-				// 	router.push('/login');
-				// }
 				if (!cookieValue || !isLoggedIn) {
 					router.push('/login');
 				} else {
 					router.push('/');
 				}
-
-				// console.log(isLoggedIn); // => `true` or `false`
 			} catch (err) {
 				console.error('AUTH ERROR from _app.js', err.message);
 			}
@@ -38,18 +28,15 @@ function MyApp({ Component, pageProps }) {
 	}, []);
 
 	useEffect(() => {
-		const routeStart = () => setLoading(true);
-		const routeEnd = () => setLoading(false);
-		router.events.on('routeChangeStart', routeStart);
-		router.events.on('routeChangeComplete', routeEnd);
+		router.events.on('routeChangeStart', () => NProgress.start());
+		router.events.on('routeChangeComplete', () => NProgress.done());
+		router.events.off('routeChangeError', () => NProgress.done());
 		return () => {
-			router.events.off('routeChangeStart', routeStart);
-			router.events.off('routeChangeComplete', routeEnd);
-			router.events.off('routeChangeError', routeEnd);
+			router.events.off('routeChangeStart', () => NProgress.start());
+			router.events.off('routeChangeComplete', () => NProgress.done());
 		};
 	}, [router]);
 
-	if (isLoading) return <Loading />;
 	return <Component {...pageProps} />;
 }
 

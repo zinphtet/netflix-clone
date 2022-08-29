@@ -9,7 +9,7 @@ import { fetchWatchAgain } from '../Hasura/hasura';
 import { verifyToken } from '../cookie/verifyToken';
 export async function getServerSideProps(context) {
 	const token = context.req.cookies.jwtToken;
-	const comedyVideos = await getVideos('comedy movies');
+	const disneyVideos = await getVideos('action movies');
 	const travelVideos = await getVideos('travel videos');
 	const productivityVideos = await getVideos('productivity videos');
 	const popularVideos = await getVideos('popular videos in Myanmar');
@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
 	);
 	return {
 		props: {
-			comedyVideos: comedyVideos || [],
+			disneyVideos: disneyVideos || [],
 			travelVideos: travelVideos || [],
 			productivityVideos: productivityVideos || [],
 			popularVideos: popularVideos || [],
@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
 	};
 }
 export default function Home({
-	comedyVideos,
+	disneyVideos,
 	travelVideos,
 	productivityVideos,
 	popularVideos,
@@ -53,7 +53,7 @@ export default function Home({
 			</Head>
 
 			<Header />
-			<CardContainer title="Comedy" cardSize="large" data={comedyVideos} />
+			<CardContainer title="Action" cardSize="large" data={disneyVideos} />
 			<CardContainer
 				title="Watch Again"
 				cardSize="small"
