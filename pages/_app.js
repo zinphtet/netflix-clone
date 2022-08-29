@@ -5,6 +5,7 @@ import Loading from '../components/Loading/Loading';
 import { m } from '../magic/magic';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
 
@@ -28,7 +29,11 @@ function MyApp({ Component, pageProps }) {
 	}, []);
 
 	useEffect(() => {
-		router.events.on('routeChangeStart', () => NProgress.start());
+		const startRoute = () => {
+			NProgress.start();
+			return <Loading />;
+		};
+		router.events.on('routeChangeStart', startRoute);
 		router.events.on('routeChangeComplete', () => NProgress.done());
 		router.events.off('routeChangeError', () => NProgress.done());
 		return () => {
