@@ -4,17 +4,26 @@ import CardContainer from '../components/CardContainer/CardContainer';
 
 import { getVideos } from '../youtube/youtube';
 import style from '../styles/Home.module.css';
-
+import { useRouter } from 'next/router';
 import { fetchWatchAgain } from '../Hasura/hasura';
 import { verifyToken } from '../cookie/verifyToken';
 export async function getServerSideProps(context) {
 	const token = context.req.cookies.jwtToken;
-	const disneyVideos = await getVideos('action movies');
+	const disneyVideos = await getVideos('hollywood movies');
 	const travelVideos = await getVideos('travel videos');
 	const productivityVideos = await getVideos('productivity videos');
 	const popularVideos = await getVideos('popular videos in Myanmar');
 
-	const { issuer } = verifyToken(token);
+	const returnedData = verifyToken(token);
+
+	if (!returnedData) {
+		return {
+			props: {
+				error: 'Route To Login Page',
+			},
+		};
+	}
+	const issuer = returnedData.issuer;
 	let watchAgainVideos = await fetchWatchAgain(token, issuer);
 
 	watchAgainVideos = watchAgainVideos.map(
@@ -43,7 +52,12 @@ export default function Home({
 	productivityVideos,
 	popularVideos,
 	watchAgainVideos,
+	error,
 }) {
+	const router = useRouter();
+	if (error) {
+		router.push('/login');
+	}
 	return (
 		<div className={style.home}>
 			<Head>
@@ -53,7 +67,7 @@ export default function Home({
 			</Head>
 
 			<Header />
-			<CardContainer title="Action" cardSize="large" data={disneyVideos} />
+			<CardContainer title="Hollywood" cardSize="large" data={disneyVideos} />
 			<CardContainer
 				title="Watch Again"
 				cardSize="small"
