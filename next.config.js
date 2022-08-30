@@ -6,7 +6,7 @@ const nextConfig = {
 		domains: [
 			'i.ytimg.com',
 			'img.youtube.com',
-			'https://img.youtube.com',
+			'i.ytimg.com',
 			'images.unsplash.com',
 		],
 	},
