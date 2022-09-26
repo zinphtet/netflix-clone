@@ -141,7 +141,9 @@ const VideoPage = ({ video }) => {
 						</div>
 					</div>
 					<div className={style.video_info}>
-						<p className={style.date}>Date : {moment(publishedAt)}</p>
+						<p className={style.date}>
+							Date : {moment(publishedAt, 'YYYYMMDD').fromNow()}
+						</p>
 						<p className={style.cast}>Cast : {cast}</p>
 						<p className={style.view}>Views Count : {millify(views)}</p>
 						<h3 className={style.title}>{title} </h3>
