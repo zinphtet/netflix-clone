@@ -8,6 +8,8 @@ import Loading from '../../components/Loading/Loading';
 import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import { verifyToken } from '../../cookie/verifyToken';
 import { updateStatsFromClient } from '../../Hasura/helper';
+import moment from 'moment/moment';
+import millify from 'millify';
 // 4zH5iYM4wJo
 // bLvqoHBptjg
 // uO3HUjiWc8k
@@ -139,9 +141,9 @@ const VideoPage = ({ video }) => {
 						</div>
 					</div>
 					<div className={style.video_info}>
-						<p className={style.date}>Date : {publishedAt}</p>
+						<p className={style.date}>Date : {moment(publishedAt)}</p>
 						<p className={style.cast}>Cast : {cast}</p>
-						<p className={style.view}>Views Count : {views}</p>
+						<p className={style.view}>Views Count : {millify(views)}</p>
 						<h3 className={style.title}>{title} </h3>
 						<p className={style.description}>{description}</p>
 					</div>
